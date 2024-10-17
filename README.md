@@ -15,3 +15,5 @@ https://learn.unity.com/tutorial/install-the-unity-hub-and-editor
 
 In this tutorial, we will write a script that takes player input in the form of key presses or gamepad joystick movements and use it to move a Unity `GameObject` at an adjustable speed that is framerate independent.
 
+https://github.com/user-attachments/assets/0f9e451a-8233-4a7b-81a0-881b697ba2be
+

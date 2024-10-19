@@ -13,7 +13,7 @@ https://learn.unity.com/tutorial/install-the-unity-hub-and-editor
 
 You will also need to know how to create an empty project, add primitive objects to your scene, create blank scripts, and run projects from within the editor. If you need help with this, there is a short video demonstrating how to do all of these things here: 
 
-<video src='https://www.youtube.com/watch?v=eQpWPfP1T6g'></video>
+https://www.youtube.com/watch?v=eQpWPfP1T6g
 
 
 ## Objectives
@@ -42,3 +42,43 @@ The transform component is responsible for maintaining the position of the cube 
 
 https://github.com/user-attachments/assets/b3ca875e-13b6-4bb5-8c0f-3fe4296f39c2
 
+To make the position update from our script all we need to do is modify the `Transform` component of the game object.
+
+## Scripted movement
+
+If you double click on the `Player` script, the Visual Studio editor should open with the code in the main editor window. The initial code should look like this:
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+```
+
+To modify the transform of the object this script is attached to, all we need do is refer to it by its variable name `transform`. This is one of the variables inherited by our player class from the Unity supplied `MonoBehaviour` class. The line defining the `Player` class:
+
+```cs
+public class Player : MonoBehaviour
+```
+
+- `public` means that this class can be accessed from other scripts
+- `class` means that what follows is a class definition
+- `Player` is the name we supplied for the class
+- `:` means this class inherits functions and variables from another
+- `MonoBehaviour` is a Unity supplied class
+
+You can look up what [`MonoBehaviour`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html) supplies in the Unity documentation. And if you scroll through that documentation (there is quite a lot) you will eventually get to the `transform` member variable.

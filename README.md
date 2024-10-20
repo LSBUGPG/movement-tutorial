@@ -95,8 +95,8 @@ To move the transform in the scene, the simplest function to use is [`Translate`
     }
 ```
 
-[!WARNING]
-The capitalization of the words is important here. So `transform` must begin with a lower case `t` and `Translate` must begin with an upper case `T`.
+> [!CAUTION]
+> The capitalization of the words is important here. So `transform` must begin with a lower case `t` and `Translate` must begin with an upper case `T`. Using alternative capitalization or spelling will result in syntax errors.
 
-[!NOTE]
-This follows the convention in Unity code that variables start with a lower case letter and classes start with upper case letters. This is not a requirement of the language, but it's a good idea to stick to this convention when writing Unity scripts.
+> [!NOTE]
+> This follows the convention in Unity code that variables start with a lower case letter and classes start with upper case letters. This is not a requirement of the language, but it's a good idea to stick to this convention when writing Unity scripts.

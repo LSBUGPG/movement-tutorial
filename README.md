@@ -78,7 +78,25 @@ public class Player : MonoBehaviour
 - `public` means that this class can be accessed from other scripts
 - `class` means that what follows is a class definition
 - `Player` is the name we supplied for the class
-- `:` means this class inherits functions and variables from another
-- `MonoBehaviour` is a Unity supplied class
+- `:` means this class inherits functions and variables from another class
+- `MonoBehaviour` is the Unity supplied class we are basing our new class on
 
-You can look up what [`MonoBehaviour`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html) supplies in the Unity documentation. And if you scroll through that documentation (there is quite a lot) you will eventually get to the `transform` member variable.
+You can look up what [`MonoBehaviour`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html) supplies in the Unity documentation. And if you scroll through that documentation (there is quite a lot) you will eventually get to the [`transform`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Component-transform.html) property. This property is automatically initialized by Unity allows you to reference the `Transform` component of the `GameObject` this script is on.
+
+If you follow the links in the documentation, you will see that [`Transform`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.html) itself is another Unity supplied class. And it has a number of useful functions that we can use to modify the transform of an object.
+
+To move the transform in the scene, the simplest function to use is [`Translate`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.Translate.html). And we can use that by typing an instruction into the `Update()` function of our `Player` script:
+
+```cs
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate
+    }
+```
+
+[!WARNING]
+The capitalization of the words is important here. So `transform` must begin with a lower case `t` and `Translate` must begin with an upper case `T`.
+
+[!NOTE]
+This follows the convention in Unity code that variables start with a lower case letter and classes start with upper case letters. This is not a requirement of the language, but it's a good idea to stick to this convention when writing Unity scripts.

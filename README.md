@@ -44,7 +44,7 @@ https://github.com/user-attachments/assets/b3ca875e-13b6-4bb5-8c0f-3fe4296f39c2
 
 To make the position update from our script all we need to do is modify the `Transform` component of the game object.
 
-## Scripted movement
+## Scripting movement
 
 If you double click on the `Player` script, the Visual Studio editor should open with the code in the main editor window. The initial code should look like this:
 
@@ -99,4 +99,83 @@ To move the transform in the scene, the simplest function to use is [`Translate`
 > The capitalization of the words is important here. So `transform` must begin with a lower case `t` and `Translate` must begin with an upper case `T`. Using alternative capitalization or spelling will result in syntax errors.
 
 > [!NOTE]
-> This follows the convention in Unity code that variables start with a lower case letter and classes start with upper case letters. This is not a requirement of the language, but it's a good idea to stick to this convention when writing Unity scripts.
+> This follows the convention in Unity code that variables start with lower case letters whereas classes and functions start with upper case letters. This is not a requirement of the language, but it's a good idea to stick to this convention when writing your own Unity scripts.
+
+As well as telling Unity that we want to translate the position of this object, we also have to tell it how much to translate in `x`, `y`, and `z`. Fortunately, Unity provides some handy predefined constant values we can use to test this out. For example [`Vector3.right`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Vector3-right.html) is shorthand for a 3 dimensional vector value where `x` is 1 and `y` and `z` are 0. This means that `Vector3.right` should move us to the right by one Unity unit.
+
+> [!CAUTION]
+> We also need to specify what we mean by "to the right". By default (that is unless you specify otherwise) all movements are considered to be relative to the object's own orientation. So if an object is upright and pointing along the global `x` axis, instructing unity to move `Vector3.right` will actually change the `z` position.
+
+To pass this information to the `Translate` function we need to enter the value inside brackets. These are called the arguments or parameters of the function.
+
+```cs
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(Vector3.right)
+    }
+```
+
+Finally, to make this a correct program instruction as far as the c# language is concerned, we have to end the line with a semi-colon character:
+
+```cs
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(Vector3.right);
+    }
+```
+
+To test this out, save the edits we have made to the `Player` script and switch back to the Unity window.
+
+If everything is working correctly, you should see the cube shoot off to the right. It is going a bit fast, but we'll deal with that in the next step.
+
+## Adjusting for frame rate
+
+___Why does the cube go so fast?___
+
+The clue is in the comment that Unity helpfully provides when it generates a new script:
+
+```cs
+// Update is called once per frame
+```
+
+In video game, we generate the illusion of movement by redrawing the scene many times per second and making small adjustments to the position of the objects. To see how fast our game is currently running, click on the Stats button at the top of the Game window.
+
+![image](https://github.com/user-attachments/assets/97d0aa01-ca71-4c67-b53c-717a624fa3ee)
+
+In this capture from my PC, the game graphics are updating at more than 1,000 FPS! Since we have told Unity to move our cube one Unity unit each frame, that means for me it is moving at something like 1,000 Unity units per second.
+
+Different machines will run at a faster or slower pace depending on the speed of the CPU and type of Graphics card installed. If we want our movement to be consistent no matter what device we run our game on, we will have to compensate for this movement.
+
+Fortunately, Unity provides us with a variable value that allows us to do that. That value is called [`Time.deltaTime`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Time-deltaTime.html). The documentation defines this value as "The interval in seconds from the last frame to the current one."
+
+___How does this help?___
+
+If we divide our one second by this interval we will get the total number of updates we'd expect in that time. And if we wanted to move a fixed distance in one second then we could divide that distance by the number of updates.
+
+In code we could write that as:
+
+```cs
+Vector3.right / (1 / Time.deltaTime)
+```
+
+> [!TIP]
+> Divide instructions are usually slower to execute than multiply instructions. Usually it is better to rewrite divides as multiplies if possible.
+
+But because Unity provides `deltaTime` as a fraction of a second we can use the [reciprocal method](https://www.bbc.co.uk/bitesize/articles/z78vgdm) to get the following equivalent expression:
+```cs
+Vector3.right * Time.deltaTime
+```
+
+Switch back to Visual Studio and modify the `Update` instruction:
+
+```cs
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(Vector3.right * Time.deltaTime);
+    }
+```
+
+Save the changes and run the project in Unity. You should now see the code move at a consistent pace to the right. If you watch the `x` coordinate in the Inspector window, you should see it increasing at a rate of 1 every second.

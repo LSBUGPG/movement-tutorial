@@ -6,9 +6,9 @@ This is a quick Unity tutorial to get a GameObject to move, given player input.
 
 Before approaching this tutorial, you will need a current version of Unity and a code editor (such as Microsoft Visual Studio Community) installed and ready to use.
 
-This tutorial was created with Unity 2022.3 LTS and Microsoft Visual Studio Community 2022 versions. It should work with earlier or later versions although you should check the release notes for other versions for changes to Editor controls and the Scripting API.
+This tutorial was created with Unity 2022.3 LTS and Microsoft Visual Studio Community 2022 versions. It should work with earlier or later versions. But you should check the release notes for other versions as the Editor controls or Scripting API functions may have changed.
 
-If you need help installing Unity you can many online tutorials such as:
+If you need help installing Unity you can find many online tutorials such as:
 https://learn.unity.com/tutorial/install-the-unity-hub-and-editor
 
 You will also need to know how to create an empty project, add primitive objects to your scene, create blank scripts, and run projects from within the editor. If you need help with this, there is a short video demonstrating how to do all of these things here: 
@@ -28,7 +28,7 @@ To begin with, create a new Unity project, add a cube object, and then create a 
 
 It's a good idea to run the project at this stage to make sure there are no errors or problems to deal with before starting to code.
 
-We can break our objective into to two separate tasks and then join the results. One is to get input from the player in the form of either key presses or gamepad inputs. The other is to use those inputs to change the position of the cube within the Unity scene. We can tackle these in either order.
+We can break our objective into two separate tasks and then join the results. One is to get input from the player in the form of either key presses or gamepad inputs. The other is to use those inputs to change the position of the cube within the Unity scene. We can tackle these in either order.
 
 In this tutorial I am going to start with the movement of the cube.
 
@@ -81,11 +81,11 @@ public class Player : MonoBehaviour
 - `:` means this class inherits functions and variables from another class
 - `MonoBehaviour` is the Unity supplied class we are basing our new class on
 
-You can look up what [`MonoBehaviour`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html) supplies in the Unity documentation. And if you scroll through that documentation (there is quite a lot) you will eventually get to the [`transform`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Component-transform.html) property. This property is automatically initialized by Unity allows you to reference the `Transform` component of the `GameObject` this script is on.
+You can look up what [`MonoBehaviour`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html) supplies in the Unity documentation. And if you scroll through that documentation (there is quite a lot) you will eventually get to the [`transform`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Component-transform.html) property. This property is automatically initialized by Unity and allows you to reference the `Transform` component of the `GameObject` this script is on.
 
 If you follow the links in the documentation, you will see that [`Transform`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.html) itself is another Unity supplied class. And it has a number of useful functions that we can use to modify the transform of an object.
 
-To move the transform in the scene, the simplest function to use is [`Translate`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.Translate.html). And we can use that by typing an instruction into the `Update()` function of our `Player` script:
+To move the object in the scene, the simplest function to use is [`Translate`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.Translate.html). And we can use that by typing an instruction into the `Update()` function of our `Player` script:
 
 ```cs
     // Update is called once per frame
@@ -142,11 +142,11 @@ The clue is in the comment that Unity helpfully provides when it generates a new
 
 In video games, we generate the illusion of movement by redrawing the scene many times per second and making small adjustments to the position of the objects. To see how fast our game is currently running, click on the Stats button at the top of the Game window.
 
-![image](https://github.com/user-attachments/assets/97d0aa01-ca71-4c67-b53c-717a624fa3ee)
+![the stats button highlighted in red](https://github.com/user-attachments/assets/97d0aa01-ca71-4c67-b53c-717a624fa3ee)
 
 In this capture from my PC, the game graphics are updating at more than 1,000 FPS! Since we have told Unity to move our cube one Unity unit each frame, that means for me it is moving at something like 1,000 Unity units per second.
 
-Different machines will run at a faster or slower pace depending on the speed of the CPU and type of Graphics card installed. If we want our movement to be consistent no matter what device we run our game on, we will have to compensate for this movement.
+Different machines will run at a faster or slower pace depending on the speed of the CPU and type of Graphics card installed. If we want our movement to be consistent no matter what device we run our game on, we will have to compensate for this difference in update rate.
 
 Fortunately, Unity provides us with a variable value that allows us to do that. That value is called [`Time.deltaTime`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Time-deltaTime.html). The documentation defines this value as "The interval in seconds from the last frame to the current one."
 
@@ -178,7 +178,7 @@ Switch back to Visual Studio and modify the `Update` instruction:
     }
 ```
 
-Save the changes and run the project in Unity. You should now see the code move at a consistent pace to the right. If you watch the `x` coordinate in the Inspector window, you should see it increasing at a rate of 1 every second.
+Save the changes and run the project in Unity. You should now see the cube move at a consistent pace to the right. If you watch the `x` coordinate in the Inspector window, you should see it increasing at a rate of 1 every second.
 
 ## Adjusting for speed
 
@@ -206,7 +206,7 @@ In this definition:
 
 If you save at this stage and check the Inspector window in Unity, you should see the new variable `speed` listed under the `Player` component and it should be set to your supplied default value.
 
-![image](https://github.com/user-attachments/assets/6ad6d2cc-f688-4d11-b5c6-1de7b2b9851f)
+![the speed variable as it appears in the Unity inspector window](https://github.com/user-attachments/assets/6ad6d2cc-f688-4d11-b5c6-1de7b2b9851f)
 
 > [!NOTE]
 > If you modify this value in the Unity inspector window, your script will use that value and not the number you wrote in the script. The value in the inspector window overrides the value in the script. And if you put your script on more than one object in Unity, each will have it's own `speed` value.
@@ -222,13 +222,13 @@ transform.Translate(Vector3.right * speed * Time.deltaTime);
 Now save and switch back to Unity and play. The cube should now move at a rate defined by the speed variable in the `Player` component. You can check this by modifying the value in the inspector.
 
 > [!NOTE]
-> If you put in a negative value for speed, you can get the object to travel in the opposite direction. And if you put in zero speed, the object will stop. We will use this feature to implement input controls.
+> If you put in a negative value for speed, you can get the object to travel in the opposite direction. And if you put in zero speed, the object will stop. We will use this feature later to implement input controls.
 
-If you look closely in the Visual Studio editor window you should see three grey dots under the `Vector3.right` value. This is Visual Studio hint. What it tells us is that this expression can be re-written to improve performance.
+If you look closely in the Visual Studio editor window you should see three grey dots under the `Vector3.right` value. This is a Visual Studio hint. What it tells us is that this expression can be re-written to improve performance.
 
-![image](https://github.com/user-attachments/assets/8e6a1369-9ae6-42e3-bf63-0a36d37555c3)
+![the Visual Studio editor hint indicator](https://github.com/user-attachments/assets/8e6a1369-9ae6-42e3-bf63-0a36d37555c3)
 
-The reason is that c# will perform these calculations in the order given from left to right. Since we are starting with a 3D vector (x y z) each coordinate will be calculated by multiplying by speed and then delta time for a total of 6 multiplies. However, if we multiply by the vector last, the speed and delta time are multiplied first and the result is then multiplied by each of x, y, and z for a total of 4 multiplies. That's a 30% reduction in calculations just be re-ordering the code! In single cases like this, you will not notice the reduction. But in code that loops many times the savings can be significant.
+The reason is that c# will perform these calculations in the order given from left to right. Since we are starting with a 3D vector (x y z) each coordinate will be calculated by multiplying by speed and then delta time for a total of 6 multiplies. However, if we multiply by the vector last, the speed and delta time are multiplied first and the result is then multiplied by each of x, y, and z for a total of 4 multiplies. That's a 30% reduction in calculations just by re-ordering the code! In single cases like this, you will not notice the reduction. But in code that loops many times the savings can be significant.
 
 We can either re-order the multiplication or add brackets to force the calculation into the order we want. Either way, this will remove the hint from the Visual Studio editor.
 
@@ -247,13 +247,13 @@ To see what named axes are available for input in the `Input Manager`, you can l
 > [!NOTE]
 > This option may be under a different menu on other platforms than Windows.
 
-![image](https://github.com/user-attachments/assets/a4750213-278e-42a8-ad1f-45fe0385203d)
+![the input manager section of the project settings window listing all of the mapped axes](https://github.com/user-attachments/assets/a4750213-278e-42a8-ad1f-45fe0385203d)
 
-In this list you can see that the Axes are defined twice. The first is the keyboard mapping and the second is the mapping for the GamePad.
+In this list you can see that the axes are defined twice. The first is the keyboard mapping and the second is the mapping for the GamePad.
 
 Unlike the `Translate` function we used earlier, the `GetAxis` function returns a value. That value represents the current position of the virtual input axis in the range from -1 to 1. Since we want to use that value, the neatest way to handle this is to define a local variable to hold it.
 
-Defining a local variable is similar to the way we defined the `speed` variable earlier. However, this time we don't have the option of `public` access, since this variable is temporary and will only exist with the scope of the `Update` function.
+Defining a local variable is similar to the way we defined the `speed` variable earlier. However, this time we don't have the option of `public` access, since this variable is temporary and will only exist within the scope of the `Update` function.
 
 ```cs
     void Update()
@@ -268,23 +268,23 @@ In this new line:
 - `input` is the name of the local variable
 - `=` means we are supplying an initial value
 - `Input` is the name of the `Input Manager` class
-- `GetAxis` is the name of the function we care calling to get the result
+- `GetAxis` is the name of the function we are calling to get the result
 - `Horizontal` is the name of the virtual axis we want to read
 
 > [!NOTE]
-> The quotes and capitalization of `"Horizontal"` are important here. The quotes mean that we are supplying the name of an item of data within the `Input Manager` and not a c# script name. The spelling and capitalization therefore must exactly match the entry defined in the `Input Manager` window above. Because this lookup is done only when you run the program, you will not get any warnings if the name does not match.
+> The quotes and capitalization of `"Horizontal"` are important here. The quotes mean that we are supplying the name of an item of data within the `Input Manager` and not a c# script name. The spelling and capitalization therefore must exactly match the entry defined in the `Input Manager` window above. Because this lookup is done only when you run the program, you will not get any warnings if the name does not match until you press the run button.
 
 Save the script and run the program in Unity. It won't do anything yet, but if you get an error here you may have spelled the input axis name incorrectly. For example, if I write `GetAxis("Horzontal")` then I will get the following error message every frame:
 
-![image](https://github.com/user-attachments/assets/036305f6-ade1-4962-9fee-9b3905d47fec)
+![an error showing an attempt to access an axis not defined in the input manager settings](https://github.com/user-attachments/assets/036305f6-ade1-4962-9fee-9b3905d47fec)
 
 Assuming you don't get any errors here we can continue.
 
 ## Testing the input
 
-Before hook the input into our movement expression, let's write a quick test to see if the input values are coming out correctly.
+Before we hook the input into our movement expression, let's write a quick test to see if the input values are coming out correctly.
 
-There are many ways to test variable values within a Unity script. One of the easiest is to use the instruction [`Debug.Log`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Debug.Log.html). Whatever you supply as an argument to `Debug.Log` it will output as a text in the Console window in Unity.
+There are many ways to test variable values within a Unity script. One of the easiest is to use the instruction [`Debug.Log`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Debug.Log.html). Whatever you supply as an argument to `Debug.Log` it will output as a message in the Console window in Unity.
 
 If we add a `Debug.Log` line to our script:
 
@@ -333,3 +333,31 @@ https://github.com/user-attachments/assets/0f9e451a-8233-4a7b-81a0-881b697ba2be
 
 ## Tidy up
 
+It's always a good idea to tidy up a project after you get it working. And even though we don't have much code, there are still a couple of hints from the editor.
+
+As noted earlier, there are some more grey dots under the `Start` function. Here, the hint is "The Unity message 'Start' is empty." This is letting us know that if we have an empty function that is not directly referenced by other code, we can just delete it.
+
+Also, if you look at the top of the script, you'll notice that the top two lines are slightly fainter than the following one. And if you click on those lines, you'll see a light bulb icon appear to the left.
+
+![the light bulb icon indicating a Visual Studio editor suggestion](https://github.com/user-attachments/assets/101c3a88-cbdd-4058-8f34-57572d03edd2)
+
+And if you click on that icon, the hint suggests you remove unnecessary usings. That is telling you that Visual Studio has detected that the top two lines are not required and can be deleted. Is it right? The easy way to find out is to delete those lines and see if it still works.
+
+Finally, the comment `// Update is called once per frame` might be useful to an absolute beginner, but now you've got this far it is already old news. For me, this just lengthens the script for no real benefit, so I would delete it too. That leaves the final script looking like this:
+
+```cs
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public float speed = 10;
+
+    void Update()
+    {
+        float input = Input.GetAxis("Horizontal");
+        transform.Translate(input * speed * Time.deltaTime * Vector3.right);
+    }
+}
+```
+
+Nice!

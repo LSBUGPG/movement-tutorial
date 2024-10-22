@@ -116,7 +116,7 @@ To pass this information to the `Translate` function we need to enter the value 
     }
 ```
 
-Finally, to make this a correct program instruction as far as the c# language is concerned, we have to end the line with a semi-colon character:
+Finally, to make this a correct program instruction as far as the C# language is concerned, we have to end the line with a semi-colon character:
 
 ```cs
     // Update is called once per frame
@@ -228,7 +228,7 @@ If you look closely in the Visual Studio editor window you should see three grey
 
 ![the Visual Studio editor hint indicator](https://github.com/user-attachments/assets/8e6a1369-9ae6-42e3-bf63-0a36d37555c3)
 
-The reason is that c# will perform these calculations in the order given from left to right. Since we are starting with a 3D vector (x y z) each coordinate will be calculated by multiplying by speed and then delta time for a total of 6 multiplies. However, if we multiply by the vector last, the speed and delta time are multiplied first and the result is then multiplied by each of x, y, and z for a total of 4 multiplies. That's a 30% reduction in calculations just by re-ordering the code! In single cases like this, you will not notice the reduction. But in code that loops many times the savings can be significant.
+The reason is that C# will perform these calculations in the order given from left to right. Since we are starting with a 3D vector (x y z) each coordinate will be calculated by multiplying by speed and then delta time for a total of 6 multiplies. However, if we multiply by the vector last, the speed and delta time are multiplied first and the result is then multiplied by each of x, y, and z for a total of 4 multiplies. That's a 30% reduction in calculations just by re-ordering the code! In single cases like this, you will not notice the reduction. But in code that loops many times the savings can be significant.
 
 We can either re-order the multiplication or add brackets to force the calculation into the order we want. Either way, this will remove the hint from the Visual Studio editor.
 
@@ -272,7 +272,7 @@ In this new line:
 - `Horizontal` is the name of the virtual axis we want to read
 
 > [!NOTE]
-> The quotes and capitalization of `"Horizontal"` are important here. The quotes mean that we are supplying the name of an item of data within the `Input Manager` and not a c# script name. The spelling and capitalization therefore must exactly match the entry defined in the `Input Manager` window above. Because this lookup is done only when you run the program, you will not get any warnings if the name does not match until you press the run button.
+> The quotes and capitalization of `"Horizontal"` are important here. The quotes mean that we are supplying the name of an item of data within the `Input Manager` and not a C# script name. The spelling and capitalization therefore must exactly match the entry defined in the `Input Manager` window above. Because this lookup is done only when you run the program, you will not get any warnings if the name does not match until you press the run button.
 
 Save the script and run the program in Unity. It won't do anything yet, but if you get an error here you may have spelled the input axis name incorrectly. For example, if I write `GetAxis("Horzontal")` then I will get the following error message every frame:
 

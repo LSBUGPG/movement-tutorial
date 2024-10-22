@@ -104,7 +104,7 @@ To move the object in the scene, the simplest function to use is [`Translate`](h
 As well as telling Unity that we want to translate the position of this object, we also have to tell it how much to translate in `x`, `y`, and `z`. Fortunately, Unity provides some handy predefined constant values we can use to test this out. For example [`Vector3.right`](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Vector3-right.html) is shorthand for a 3 dimensional vector value where `x` is 1 and `y` and `z` are 0. This means that `Vector3.right` should move us to the right by one Unity unit.
 
 > [!CAUTION]
-> We also need to specify what we mean by "to the right". By default (that is unless you specify otherwise) all movements are considered to be relative to the object's own orientation. So if an object is upright and pointing along the global `x` axis, instructing unity to move `Vector3.right` will actually change the `z` position.
+> We also need to specify what we mean by "to the right". By default (that is unless you specify otherwise) all movements are considered to be relative to the object's own orientation. So if an object is upright and pointing along the global `z` axis, instructing unity to move `Vector3.right` will move it to the right as expected. But if it is instead aligned along the global `x` axis, `Vector3.right` will change the `z` position.
 
 To pass this information to the `Translate` function we need to enter the value inside brackets. These are called the arguments or parameters of the function.
 
@@ -129,6 +129,9 @@ Finally, to make this a correct program instruction as far as the C# language is
 To test this out, save the edits we have made to the `Player` script and switch back to the Unity window.
 
 If everything is working correctly, you should see the cube shoot off to the right. It is going a bit fast, but we'll deal with that in the next step.
+
+> [!TIP]
+> If you want to change the behaviour to move in a global direction or relative to the camera, use the optional second argument to `Translate`, for example `transform.Translate(Camera.main.transform.right, Space.World);`
 
 ## Compensating for frame rate
 
@@ -236,6 +239,9 @@ We can either re-order the multiplication or add brackets to force the calculati
 transform.Translate(speed * Time.deltaTime * Vector3.right);
 ```
 
+> [!TIP]
+> If you want the speed to change during the game, for example when you hit a booster pad, you can achieve this by modifying the `speed` value in the code.
+
 ## Getting player input
 
 There are currently two systems for getting player input within Unity. These are known as `Input Manager (Old)` and `Input System Package (New)`. The old system is still the default option when you create a new Unity project, so we will use that in this tutorial. However, it would not be hard to swap out that system for the new one and make it work in this tutorial.
@@ -280,6 +286,9 @@ Save the script and run the program in Unity. It won't do anything yet, but if y
 
 Assuming you don't get any errors here we can continue.
 
+> [!TIP]
+> To change the keybindings mapped to any axis you can edit the keys in the `Input Manager` section of the `Project Settings` page. You can also add your own named bindings if the built in options aren't enough.
+
 ## Testing the input
 
 Before we hook the input into our movement expression, let's write a quick test to see if the input values are coming out correctly.
@@ -307,6 +316,9 @@ Holding down the right arrow key, the `D` key, or pushing a connected gamepad st
 
 If you get this we can delete the `Debug.Log` line and instead connect the input to our movement code.
 
+> [!TIP]
+> You might notice that the movement values don't instantly jump from 0 to 1. Instead they rise steadily over time. This smoothing is defined in the `Input Manager` section of the `Project Settings` page for each axis. It is configured by the `Gravity` and `Sensitivity` settings. Increasing these numbers will make the controls react faster.
+
 ## Applying the input to the movement
 
 We saw in the earlier step, that giving the object a negative speed made it move in the opposite direction. And we saw in the previous test that pressing left turns the `input` value to `-1`. So all we need to do to change our movement from right to left is to multiply it by the `input` variable.
@@ -330,6 +342,9 @@ To make this change in code, all we need to do is modify the argument for `Trans
 Save and switch back to Unity to test. You should now get the behaviour we saw earlier:
 
 https://github.com/user-attachments/assets/0f9e451a-8233-4a7b-81a0-881b697ba2be
+
+> [!TIP]
+> To add inputs for other directions add more input instructions and translate instructions.
 
 ## Tidy up
 
